@@ -24,7 +24,7 @@ Here you register a factory method, that essentially will be resolved every time
 Similiar to a AngularJS controller except that it doesn't take a name.
 
 
-## Complete Usage Example
+## Complete Node Usage Example
 Here is a complete example. Notice that the singleton is dependent on the factory, but it is declared before the factory, AND IT WORKS :-D
 
 ```javascript
@@ -68,5 +68,8 @@ di.resolve(["MyFactory", "MySingleton", function Test2(myFactory, mySingleton) {
  #2 singleton test:  state2
  */
 ```
+
+## Non-node usage
+
 
 # Enjoy! :-D

@@ -62,4 +62,10 @@
 
         fn.apply(null, resolvedDependencies);
     };
+
+    if (typeof define === "function") {
+        define([], function () {
+            return di;
+        });
+    }
 }).call(this);
