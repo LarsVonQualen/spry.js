@@ -1,0 +1,27 @@
+{
+  "name": "spry.js",
+  "version": "1.0.0",
+  "description": "Tiny dependency injection framework, that uses the same syntax as AngularJS.",
+  "main": "di-test.js",
+  "scripts": {
+    "test": "node di-test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LarsVonQualen/spry.js.git"
+  },
+  "keywords": [
+    "tiny",
+    "dependency",
+    "injection",
+    "di",
+    "awesome",
+    "angularjs"
+  ],
+  "author": "Lars von Qualen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LarsVonQualen/spry.js/issues"
+  },
+  "homepage": "https://github.com/LarsVonQualen/spry.js"
+}
