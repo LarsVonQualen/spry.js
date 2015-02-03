@@ -1,19 +1,19 @@
 <!doctype html>
 <html>
 <head>
-    <title>DI Test</title>
+    <title>spry.js test</title>
 </head>
 <body>
-    Herp derp
+    Herp derp look in the console! :D
 
-    <script type="text/javascript" src="di.js"></script>
+    <script type="text/javascript" src="spry.js"></script>
     <script type="text/javascript">
         (function () {
-            di.register.singleton("MySingleton", ["MyFactory", function MySingleton(myFactory) {
+            spry.register.singleton("MySingleton", ["MyFactory", function MySingleton(myFactory) {
                 return myFactory;
             }]);
 
-            di.register.factory("MyFactory", [function MyFactory() {
+            spry.register.factory("MyFactory", [function MyFactory() {
                 var someStateVar = "state1";
 
                 return {
@@ -26,7 +26,7 @@
                 };
             }]);
 
-            di.resolve(["MyFactory", "MySingleton", function Test1(myFactory, mySingleton) {
+            spry.resolve(["MyFactory", "MySingleton", function Test1(myFactory, mySingleton) {
                 console.log("#1 factory test: ", myFactory.getState());
                 myFactory.setState("state2");
 
@@ -34,7 +34,7 @@
                 mySingleton.setState("state2");
             }]);
 
-            di.resolve(["MyFactory", "MySingleton", function Test2(myFactory, mySingleton) {
+            spry.resolve(["MyFactory", "MySingleton", function Test2(myFactory, mySingleton) {
                 console.log("#2 factory test: ", myFactory.getState());
                 console.log("#2 singleton test: ", mySingleton.getState());
             }]);

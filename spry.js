@@ -2,23 +2,23 @@
 
 (function () {
     var root = this,
-        previous_di = root.di,
-        di = {};
+        previous_spry = root.spry,
+        spry = {};
 
 
-    di.noConflict = function() {
-        root.di = previous_di;
-        return di;
+    spry.noConflict = function() {
+        root.spry = previous_spry;
+        return spry;
     };
 
     if( typeof exports !== 'undefined' ) {
         if( typeof module !== 'undefined' && module.exports ) {
-            exports = module.exports = di;
+            exports = module.exports = spry;
         }
 
-        exports.di = di;
+        exports.spry = spry;
     } else {
-        root.di = di;
+        root.spry = spry;
     }
 
     var _dependencies = {},
@@ -32,7 +32,7 @@
         return resolved;
     };
 
-    di.register = {
+    spry.register = {
         singleton: function singleton(name, dependencies) {
             var instance = undefined, fn = dependencies.pop();
 
@@ -57,7 +57,7 @@
         }
     };
 
-    di.resolve = function resolve(dependencies) {
+    spry.resolve = function resolve(dependencies) {
         var fn = dependencies.pop(), resolvedDependencies = resolver(dependencies);
 
         fn.apply(null, resolvedDependencies);
@@ -65,7 +65,7 @@
 
     if (typeof define === "function") {
         define([], function () {
-            return di;
+            return spry;
         });
     }
 }).call(this);

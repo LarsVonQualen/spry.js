@@ -6,6 +6,7 @@ The api consists of three different methods.
 
 ```javascript
 {
+    noConflict: function () {},
     register: {
         singleton: function(name, dependencies) {},
         factory: function (name, dependencies) {}
@@ -70,6 +71,8 @@ di.resolve(["MyFactory", "MySingleton", function Test2(myFactory, mySingleton) {
 ```
 
 ## Non-node usage
+In the browser just add the module and it will expose it self globally on the window object. If there is a conflict use the `.noConflict()` method, works like jQuery.
 
+The module should work with AMD loaders too, but this needs to be tested.
 
 # Enjoy! :-D
