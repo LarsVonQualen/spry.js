@@ -29,13 +29,13 @@ Similiar to a AngularJS controller except that it doesn't take a name.
 Here is a complete example. Notice that the singleton is dependent on the factory, but it is declared before the factory, AND IT WORKS :-D
 
 ```javascript
-var di = require("./di.js");
+var spry = require("./spry.js");
 
-di.register.singleton("MySingleton", ["MyFactory", function MySingleton(myFactory) {
+spry.register.singleton("MySingleton", ["MyFactory", function MySingleton(myFactory) {
     return myFactory;
 }]);
 
-di.register.factory("MyFactory", [function MyFactory() {
+spry.register.factory("MyFactory", [function MyFactory() {
     var someStateVar = "state1";
 
     return {
@@ -48,7 +48,7 @@ di.register.factory("MyFactory", [function MyFactory() {
     };
 }]);
 
-di.resolve(["MyFactory", "MySingleton", function Test1(myFactory, mySingleton) {
+spry.resolve(["MyFactory", "MySingleton", function Test1(myFactory, mySingleton) {
     console.log("#1 factory test: ", myFactory.getState());
     myFactory.setState("state2");
 
@@ -56,7 +56,7 @@ di.resolve(["MyFactory", "MySingleton", function Test1(myFactory, mySingleton) {
     mySingleton.setState("state2");
 }]);
 
-di.resolve(["MyFactory", "MySingleton", function Test2(myFactory, mySingleton) {
+spry.resolve(["MyFactory", "MySingleton", function Test2(myFactory, mySingleton) {
     console.log("#2 factory test: ", myFactory.getState());
     console.log("#2 singleton test: ", mySingleton.getState());
 }]);
