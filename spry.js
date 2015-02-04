@@ -1,5 +1,12 @@
 'use strict';
 
+/**
+ * spry.js
+ *
+ * MIT License
+ *
+ * Author: Lars von Qualen <larsvonqualen@gmail.com>
+ */
 (function () {
     var root = this,
         previous_spry = root.spry,
