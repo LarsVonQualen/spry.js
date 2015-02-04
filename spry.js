@@ -40,7 +40,7 @@
                 if (instance === undefined) {
                     var resolvedDependencies = resolver(dependencies);
 
-                    instance = fn.apply(null, resolvedDependencies);
+                    instance = fn.apply(spry, resolvedDependencies);
                 }
 
                 return instance;
@@ -52,7 +52,7 @@
             _dependencies[name] = function factory() {
                 var resolvedDependencies = resolver(dependencies);
 
-                return fn.apply(null, resolvedDependencies);
+                return fn.apply(spry, resolvedDependencies);
             }
         }
     };
@@ -60,7 +60,7 @@
     spry.resolve = function resolve(dependencies) {
         var fn = dependencies.pop(), resolvedDependencies = resolver(dependencies);
 
-        fn.apply(null, resolvedDependencies);
+        fn.apply(root, resolvedDependencies);
     };
 
     if (typeof define === "function") {
