@@ -1,6 +1,6 @@
 {
   "name": "spry.js",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Tiny dependency injection framework, that uses the same syntax as AngularJS.",
   "main": "spry.js",
   "scripts": {
