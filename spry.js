@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * spry.js
  *
@@ -8,6 +6,8 @@
  * Author: Lars von Qualen <larsvonqualen@gmail.com>
  */
 (function () {
+    'use strict';
+
     var root = this,
         previous_spry = root.spry,
         spry = {};
@@ -60,7 +60,7 @@
                 var resolvedDependencies = resolver(dependencies);
 
                 return fn.apply(null, resolvedDependencies);
-            }
+            };
         }
     };
 
