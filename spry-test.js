@@ -29,3 +29,21 @@ spry.resolve(["MyFactory", "MySingleton", function Test2(myFactory, mySingleton)
     console.log("#2 factory test: ", myFactory.getState());
     console.log("#2 singleton test: ", mySingleton.getState());
 }]);
+
+try {
+    spry.resolve(["InvalidDependency", function shouldThrow() {
+
+    }]);
+} catch (e) {
+    console.log(e);
+}
+
+try {
+    spry.register.singleton("ThisIsNotAFunction", [{}]);
+
+    spry.resolve(["ThisIsNotAFunction", function shouldThrow() {
+
+    }])
+} catch (e) {
+    console.log(e);
+}

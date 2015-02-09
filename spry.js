@@ -33,6 +33,10 @@
         var resolved = [];
 
         dependencies.forEach(function dependencyIterator(d) {
+            if (_dependencies[d] === undefined) {
+                throw new Error("Dependency '" + d + "' is undefined.");
+            }
+
             resolved.push(_dependencies[d]());
         });
 
@@ -41,7 +45,11 @@
 
     spry.register = {
         singleton: function singleton(name, dependencies) {
+            if (!(dependencies instanceof Array)) throw new Error("Dependencies must be defined in an array.");
+
             var instance = undefined, fn = dependencies.pop();
+
+            if (typeof(fn) !== "function") throw new Error("Dependency '" + name + "' is not a function.");
 
             _dependencies[name] = function singleton() {
                 if (instance === undefined) {
@@ -54,7 +62,11 @@
             };
         },
         factory: function factory(name, dependencies) {
+            if (!(dependencies instanceof Array)) throw new Error("Dependencies must be defined in an array.");
+
             var fn = dependencies.pop();
+
+            if (typeof(fn) !== "function") throw new Error("Dependency '" + name + "' is not a function.");
 
             _dependencies[name] = function factory() {
                 var resolvedDependencies = resolver(dependencies);
