@@ -1,6 +1,8 @@
 # spry.js
 Tiny Javascript dependency injection framework, that uses the same syntax as AngularJS.
 
+[![NPM](https://nodei.co/npm/spry.js.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/spry.js.png?downloads=true&downloadRank=true&stars=true)
+
 ## It's very simple to use....
 The api consists of three different methods.
 
