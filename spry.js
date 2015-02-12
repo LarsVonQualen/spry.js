@@ -36,7 +36,9 @@
             if (_dependencies[d] === undefined) {
                 throw new Error("Dependency '" + d + "' is undefined.");
             }
-
+            
+            if (typeof(_dependencies[d]) !== "function") throw new Error("Dependency '" + d + "' is not a function.");
+            
             resolved.push(_dependencies[d]());
         });
 
@@ -55,7 +57,7 @@
                 if (instance === undefined) {
                     var resolvedDependencies = resolver(dependencies);
 
-                    instance = fn.apply(null, resolvedDependencies);
+                    instance = fn.apply({}, resolvedDependencies);
                 }
 
                 return instance;
@@ -71,7 +73,7 @@
             _dependencies[name] = function factory() {
                 var resolvedDependencies = resolver(dependencies);
 
-                return fn.apply(null, resolvedDependencies);
+                return fn.apply({}, resolvedDependencies);
             };
         }
     };
@@ -79,7 +81,7 @@
     spry.resolve = function resolve(dependencies) {
         var fn = dependencies.pop(), resolvedDependencies = resolver(dependencies);
 
-        fn.apply(null, resolvedDependencies);
+        fn.apply({}, resolvedDependencies);
     };
 
     if (typeof define === "function") {
