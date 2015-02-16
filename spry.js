@@ -36,10 +36,10 @@
             if (_dependencies[d] === undefined) {
                 throw new Error("Dependency '" + d + "' is undefined.");
             }
-            
-            if (typeof(_dependencies[d]) !== "function") throw new Error("Dependency '" + d + "' is not a function.");
-            
-            resolved.push(_dependencies[d]());
+
+            //if (typeof(_dependencies[d].fn) !== "function") throw new Error("Dependency '" + d + "' is not a function.");
+
+            resolved.push(_dependencies[d].fn());
         });
 
         return resolved;
@@ -53,14 +53,17 @@
 
             if (typeof(fn) !== "function") throw new Error("Dependency '" + name + "' is not a function.");
 
-            _dependencies[name] = function singleton() {
-                if (instance === undefined) {
-                    var resolvedDependencies = resolver(dependencies);
+            _dependencies[name] = {
+                dependencies: dependencies,
+                fn: function singleton() {
+                    if (instance === undefined) {
+                        var resolvedDependencies = resolver(dependencies);
 
-                    instance = fn.apply({}, resolvedDependencies);
+                        instance = fn.apply({}, resolvedDependencies);
+                    }
+
+                    return instance;
                 }
-
-                return instance;
             };
         },
         factory: function factory(name, dependencies) {
@@ -70,10 +73,13 @@
 
             if (typeof(fn) !== "function") throw new Error("Dependency '" + name + "' is not a function.");
 
-            _dependencies[name] = function factory() {
-                var resolvedDependencies = resolver(dependencies);
+            _dependencies[name] = {
+                dependencies: dependencies,
+                fn: function factory() {
+                    var resolvedDependencies = resolver(dependencies);
 
-                return fn.apply({}, resolvedDependencies);
+                    return fn.apply({}, resolvedDependencies);
+                }
             };
         }
     };
@@ -83,6 +89,10 @@
 
         fn.apply({}, resolvedDependencies);
     };
+
+    spry.getDependencyGraph = function () {
+        return _dependencies;
+    }:
 
     if (typeof define === "function") {
         define([], function () {
