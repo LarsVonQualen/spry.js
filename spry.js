@@ -92,7 +92,7 @@
 
     spry.getDependencyGraph = function () {
         return _dependencies;
-    }:
+    };
 
     if (typeof define === "function") {
         define([], function () {
