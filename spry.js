@@ -54,6 +54,7 @@
             if (typeof(fn) !== "function") throw new Error("Dependency '" + name + "' is not a function.");
 
             _dependencies[name] = {
+                name: name,
                 dependencies: dependencies,
                 fn: function singleton() {
                     if (instance === undefined) {
@@ -74,6 +75,7 @@
             if (typeof(fn) !== "function") throw new Error("Dependency '" + name + "' is not a function.");
 
             _dependencies[name] = {
+                name: name,
                 dependencies: dependencies,
                 fn: function factory() {
                     var resolvedDependencies = resolver(dependencies);
