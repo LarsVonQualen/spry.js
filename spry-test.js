@@ -1,4 +1,5 @@
 var spry = require("./spry.js");
+var spry1 = require("./spry.js");
 
 spry.register.singleton("MySingleton", ["MyFactory", function MySingleton(myFactory) {
     return myFactory;

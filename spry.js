@@ -28,6 +28,10 @@
         root.spry = spry;
     }
 
+    if (previous_spry !== undefined) {
+        throw new Error("Multiple includes of spry, don't do that :-)");
+    }
+
     var _dependencies = {},
     resolver = function resolver(dependencies) {
         var resolved = [];
@@ -95,10 +99,4 @@
     spry.getDependencyGraph = function () {
         return _dependencies;
     };
-
-    if (typeof define === "function") {
-        define([], function () {
-            return spry;
-        });
-    }
 }).call(this);
