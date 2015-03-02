@@ -13,7 +13,9 @@ The api consists of three different methods.
         singleton: function(name, dependencies) {},
         factory: function (name, dependencies) {}
     },
-    resolve: function (dependencies) {}
+    resolve: function (dependencies) {},
+    resolveSingleWith: function(dependency, substitutes),
+    resolveWith: function(substitutes, dependencies)
 }
 ```
 
@@ -26,6 +28,46 @@ Here you register a factory method, that essentially will be resolved every time
 ### Resolve
 Similiar to a AngularJS controller except that it doesn't take a name.
 
+## In a test scenario
+```javascript
+try {
+    var singletonUnderTest = spry.resolveSingleDependencyWith("MySingleton", {
+        "MyFactory": {
+            setState: function () {
+                console.log("im setstate");
+            },
+            getState: function () {
+                console.log("im getState");
+            }
+        }
+    });
+
+    singletonUnderTest.setState("blag");
+    singletonUnderTest.getState();
+} catch (e) {
+    console.log(e);
+}
+
+try {
+    spry.resolveWith({
+        "MyFactory": {
+            setState: function () {
+                console.log("im setstate");
+            },
+            getState: function () {
+                console.log("im getState");
+            }
+        }
+    }, ["MyFactory", "MySingleton", function Test2(myFactory, mySingleton) {
+        console.log("#3 factory test:");
+        myFactory.getState();
+        console.log("#3 singleton test: ", mySingleton.getState());
+
+    }]);
+} catch (e) {
+    console.log(e);
+}
+```
 
 ## Complete Node Usage Example
 Here is a complete example. Notice that the singleton is dependent on the factory, but it is declared before the factory, AND IT WORKS :-D

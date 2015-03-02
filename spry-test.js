@@ -48,3 +48,41 @@ try {
 } catch (e) {
     console.log(e);
 }
+
+try {
+    var singletonUnderTest = spry.resolveSingleDependencyWith("MySingleton", {
+        "MyFactory": {
+            setState: function () {
+                console.log("im setstate");
+            },
+            getState: function () {
+                console.log("im getState");
+            }
+        }
+    });
+
+    singletonUnderTest.setState("blag");
+    singletonUnderTest.getState();
+} catch (e) {
+    console.log(e);
+}
+
+try {
+    spry.resolveWith({
+        "MyFactory": {
+            setState: function () {
+                console.log("im setstate");
+            },
+            getState: function () {
+                console.log("im getState");
+            }
+        }
+    }, ["MyFactory", "MySingleton", function Test2(myFactory, mySingleton) {
+        console.log("#3 factory test:");
+        myFactory.getState();
+        console.log("#3 singleton test: ", mySingleton.getState());
+
+    }]);
+} catch (e) {
+    console.log(e);
+}

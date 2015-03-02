@@ -37,13 +37,17 @@
         var resolved = [];
 
         dependencies.forEach(function dependencyIterator(d) {
-            if (_dependencies[d] === undefined) {
-                throw new Error("Dependency '" + d + "' is undefined.");
+            if (typeof(d) === 'object') {
+                resolved.push(d);
+            } else {
+                if (_dependencies[d] === undefined) {
+                    throw new Error("Dependency '" + d + "' is undefined.");
+                }
+
+                //if (typeof(_dependencies[d].fn) !== "function") throw new Error("Dependency '" + d + "' is not a function.");
+
+                resolved.push(_dependencies[d].fn());
             }
-
-            //if (typeof(_dependencies[d].fn) !== "function") throw new Error("Dependency '" + d + "' is not a function.");
-
-            resolved.push(_dependencies[d].fn());
         });
 
         return resolved;
@@ -68,7 +72,8 @@
                     }
 
                     return instance;
-                }
+                },
+                rawFn: fn
             };
         },
         factory: function factory(name, dependencies) {
@@ -85,7 +90,8 @@
                     var resolvedDependencies = resolver(dependencies);
 
                     return fn.apply({}, resolvedDependencies);
-                }
+                },
+                rawFn: fn
             };
         }
     };
@@ -94,6 +100,38 @@
         var fn = dependencies.pop(), resolvedDependencies = resolver(dependencies);
 
         fn.apply({}, resolvedDependencies);
+    };
+
+    spry.resolveSingleWith = function resolveSingleWith(dependency, substitutes) {
+        var newList = _dependencies[dependency].dependencies.slice(0);
+
+        for (var key in substitutes) {
+            newList.forEach(function (e, i) {
+                if (e == key) {
+                    newList[i] = substitutes[key];
+                }
+            });
+        }
+
+        var resolved = resolver(newList);
+
+        return _dependencies[dependency].rawFn.apply({}, resolved);
+    };
+
+    spry.resolveWith = function resolveWith(substitutes, dependencies) {
+        var fn = dependencies.pop();
+
+        for (var key in substitutes) {
+            dependencies.forEach(function (e, i) {
+                if (e == key) {
+                    dependencies[i] = substitutes[key];
+                }
+            });
+        }
+
+        var resolved = resolver(dependencies);
+
+        return fn.apply({}, resolved);
     };
 
     spry.getDependencyGraph = function () {
